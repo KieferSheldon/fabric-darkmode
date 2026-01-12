@@ -4,6 +4,7 @@ import {getHashCode} from '../../utils/text';
 import {createAsyncTasksQueue} from '../../utils/throttle';
 
 import {iterateCSSRules, iterateCSSDeclarations, isMediaRule, isLayerRule, isStyleRule} from './css-rules';
+import {shouldIgnoreSelector} from './ignored-selectors';
 import {themeCacheKeys} from './modify-colors';
 import type {ModifiableCSSDeclaration, ModifiableCSSRule} from './modify-css';
 import {getModifiableCSSDeclaration} from './modify-css';
@@ -102,6 +103,11 @@ export function createStyleSheetModifier(): StyleSheetModifier {
             // and currently contributes nothing in real-world case.
             // TODO: Allow `setRule` to throw a exception when we're modifying SVGs namespace styles.
             if (rule.style.all === 'revert') {
+                return;
+            }
+
+            // Skip selectors for PBI/Fabric elements that should not have dark mode applied
+            if (shouldIgnoreSelector(rule.selectorText)) {
                 return;
             }
 
