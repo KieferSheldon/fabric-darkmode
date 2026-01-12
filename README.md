@@ -15,7 +15,7 @@ This project is a fork of [Dark Reader](https://github.com/darkreader/darkreader
 - **Easy Toggle**: Use the extension icon to quickly enable/disable dark mode as needed
 - **Persistent Settings**: Your preferences are saved across sessions
 
-### ⚠️ Report Rendering Notes
+### Report Rendering Notes
 
 Some reports may display styling issues when dark mode is enabled, particularly in:
 - Complex visualizations
