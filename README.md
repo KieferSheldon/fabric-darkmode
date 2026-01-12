@@ -26,13 +26,14 @@ This is normal and expected. Simply **toggle the extension off** using the icon 
 
 ## Installation
 
-1. Download or clone this repository
-2. Run `npm install`
-3. Run `npm run build`
-4. Open Edge/Chrome and go to `chrome://extensions/` (or `edge://extensions/`)
-5. Enable "Developer mode"
-6. Click "Load unpacked"
-7. Select the `build/release/chrome-mv3` folder
+1. Download `fabric-dark-mode-v1.0.0.zip` from the [latest release](https://github.com/KieferSheldon/fabric-darkmode/releases/)
+2. Extract the ZIP file to a folder (keep this folder - don't delete it)
+3. Open your browser's extension page:
+   - **Chrome:** `chrome://extensions/`
+   - **Edge:** `edge://extensions/`
+4. Enable **Developer mode** (toggle in top right)
+5. Click **Load unpacked**
+6. Select the extracted folder
 
 ## Building
 
