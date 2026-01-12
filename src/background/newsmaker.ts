@@ -129,6 +129,10 @@ export default class Newsmaker {
         if (__TEST__) {
             return newsForTesting;
         }
+        // Skip fetching news if URL is empty (fork without news feed)
+        if (!NEWS_URL) {
+            return [];
+        }
         try {
             const response = await fetch(NEWS_URL, {cache: 'no-cache'});
             const $news: Array<Omit<News, 'read' | 'url'> & {date: string}> = await response.json();
