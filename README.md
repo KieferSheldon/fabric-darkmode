@@ -8,16 +8,6 @@ A dark mode browser extension specifically configured for Microsoft Fabric.
 
 This project is a fork of [Dark Reader](https://github.com/darkreader/darkreader), an open-source MIT-licensed browser extension. All credit for the core functionality goes to the Dark Reader team.
 
-## Supported Sites
-
-This extension is configured to work with:
-- `*.fabric.microsoft.com`
-- `*.powerbi.com`
-- `*.pbidedicated.windows.net`
-- `*.analysis.windows.net`
-- `*.asazure.windows.net`
-- `*.powerapps.com`
-
 ## Installation
 
 1. Download or clone this repository
