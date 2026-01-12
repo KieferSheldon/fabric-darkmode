@@ -2,7 +2,7 @@ import type {Theme} from '../../definitions';
 import {forEach} from '../../utils/array';
 import {removeCSSComments} from '../../utils/css-text/css-text';
 import {loadAsText} from '../../utils/network';
-import {isShadowDomSupported, isSafari, isFirefox} from '../../utils/platform';
+import {isShadowDomSupported, isSafari} from '../../utils/platform';
 import {getMatchesWithOffsets} from '../../utils/text';
 import {getAbsoluteURL, isRelativeHrefOnAbsolutePath} from '../../utils/url';
 import {readCSSFetchCache, writeCSSFetchCache} from '../cache';
@@ -71,7 +71,6 @@ export function shouldManageStyle(element: Node | null): boolean {
                 element.rel.toLowerCase().includes('stylesheet') &&
                 Boolean(element.href) &&
                 !element.disabled &&
-                (isFirefox ? !element.href.startsWith('moz-extension://') : true) &&
                 !isFontsGoogleApiStyle(element)
             )
         ) &&
@@ -89,12 +88,7 @@ export function getManageableStyles(node: Node | null, results: StyleElement[] =
             (node as Element).querySelectorAll(STYLE_SELECTOR),
             (style: StyleElement) => getManageableStyles(style, results, false),
         );
-        if (
-            deep && (
-                (node as Element).children?.length > 0 || 
-                (node as Element).shadowRoot
-            )
-        ) {
+        if (deep) {
             iterateShadowHosts(node, (host) => getManageableStyles(host.shadowRoot, results, false));
         }
     }

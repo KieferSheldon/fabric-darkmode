@@ -1,12 +1,12 @@
 {
     "manifest_version": 2,
-    "name": "Dark Reader",
-    "version": "4.9.118",
+    "name": "Fabric Dark Mode",
+    "version": "1.0.0",
     "author": "Alexander Shutau",
     "description": "__MSG_extension_description__",
     "default_locale": "en",
     "browser_action": {
-        "default_title": "Dark Reader",
+        "default_title": "Fabric Dark Mode",
         "default_icon": {
             "38": "icons/dr_active_38.png",
             "19": "icons/dr_active_19.png"
@@ -25,7 +25,15 @@
     "content_scripts": [
         {
             "matches": [
-                "<all_urls>"
+                "https://*.fabric.microsoft.com/*",
+                "https://*.powerbi.com/*",
+                "https://*.pbidedicated.windows.net/*",
+                "https://*.pbidedicated.windows-int.net/*",
+                "https://*.analysis.windows.net/*",
+                "https://*.asazure.windows.net/*",
+                "https://*.trafficmanager.net/*",
+                "https://*.powerapps.com/*",
+                "https://gatewayadminportal.azure.com/*"
             ],
             "js": [
                 "inject/fallback.js",
@@ -41,7 +49,8 @@
         "fontSettings",
         "storage",
         "tabs",
-        "<all_urls>"
+        "https://*.fabric.microsoft.com/*",
+        "https://*.powerbi.com/*"
     ],
     "optional_permissions": [
         "contextMenus"
