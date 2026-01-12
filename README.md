@@ -8,6 +8,22 @@ A dark mode browser extension specifically configured for Microsoft Fabric.
 
 This project is a fork of [Dark Reader](https://github.com/darkreader/darkreader), an open-source MIT-licensed browser extension. All credit for the core functionality goes to the Dark Reader team.
 
+## Features
+
+- **Notebooks Support**: Dark mode that mimics VS Code's notebook dark theme for a consistent experience
+- **Reports Optimization**: Optimized for Power BI and Fabric reports (with caveats - see below)
+- **Easy Toggle**: Use the extension icon to quickly enable/disable dark mode as needed
+- **Persistent Settings**: Your preferences are saved across sessions
+
+### ⚠️ Report Rendering Notes
+
+Some reports may display styling issues when dark mode is enabled, particularly in:
+- Complex visualizations
+- Custom formatted reports
+- Certain report elements
+
+This is normal and expected. Simply **toggle the extension off** using the icon when viewing reports that don't render well in dark mode. You can re-enable it when navigating back to other Fabric components.
+
 ## Installation
 
 1. Download or clone this repository
