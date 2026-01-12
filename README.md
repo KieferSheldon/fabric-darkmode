@@ -1,6 +1,6 @@
 # Fabric Dark Mode
 
-A dark mode browser extension specifically configured for Microsoft Fabric.
+A dark mode Chrome extension specifically configured for Microsoft Fabric.
 
 ## ⚠️ Disclaimer
 
