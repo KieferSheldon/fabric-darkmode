@@ -506,6 +506,52 @@ function injectVisualTitleStyles(): void {
 }
 
 /**
+ * Check if an element is the Fabric Formatter button (third-party extension)
+ */
+function isFabricFormatterButton(element: HTMLElement): boolean {
+    return element.id === 'fabric-formatter-button';
+}
+
+/**
+ * Fix the Fabric Formatter button text color for dark mode visibility
+ */
+function fixFabricFormatterButton(button: HTMLElement): void {
+    button.style.setProperty('color', 'rgb(209, 205, 199)', 'important');
+    
+    // Also fix any child spans
+    const spans = button.querySelectorAll('span');
+    spans.forEach((span) => {
+        (span as HTMLElement).style.setProperty('color', 'rgb(209, 205, 199)', 'important');
+    });
+}
+
+/**
+ * Fix any existing Fabric Formatter buttons on the page
+ */
+function fixExistingFabricFormatterButtons(): void {
+    const button = document.getElementById('fabric-formatter-button');
+    if (button) {
+        fixFabricFormatterButton(button);
+    }
+}
+
+/**
+ * Fix Material Design input fields (email/search inputs in dialogs)
+ */
+function fixMaterialInputs(): void {
+    const inputs = document.querySelectorAll('input.mat-mdc-input-element, input.mat-mdc-chip-input, input[data-unique-id="EmailsListInput"]');
+    inputs.forEach((input) => {
+        (input as HTMLElement).style.setProperty('color', 'rgb(209, 205, 199)', 'important');
+    });
+    
+    // Fix "Search within workspace" input background
+    const searchInputs = document.querySelectorAll('input[placeholder*="Search within"], input.search-filter-content');
+    searchInputs.forEach((input) => {
+        (input as HTMLElement).style.setProperty('background-color', 'transparent', 'important');
+    });
+}
+
+/**
  * Start observing for slicer popup mutations
  */
 export function startSlicerFix(): void {
@@ -526,6 +572,8 @@ export function startSlicerFix(): void {
     fixExistingVisualHeaderItemContainers();
     fixExistingMonacoCursors();
     fixExistingTooltipContainers();
+    fixExistingFabricFormatterButtons();
+    fixMaterialInputs(); // Fix any existing material inputs
 
     // Create observer for new elements
     slicerObserver = new MutationObserver((mutations) => {
@@ -627,6 +675,18 @@ export function startSlicerFix(): void {
                         fixTooltipContainer(htmlEl);
                         fixTooltipContainerChildren(htmlEl);
                     });
+                    
+                    // Check for Fabric Formatter button
+                    if (isFabricFormatterButton(node)) {
+                        fixFabricFormatterButton(node);
+                    }
+                    const formatterBtn = node.querySelector?.('#fabric-formatter-button') as HTMLElement;
+                    if (formatterBtn) {
+                        fixFabricFormatterButton(formatterBtn);
+                    }
+                    
+                    // Fix material inputs and search fields whenever nodes are added
+                    fixMaterialInputs();
                 }
             });
 
@@ -666,6 +726,20 @@ export function startSlicerFix(): void {
                     fixTooltipContainer(target);
                     fixTooltipContainerChildren(target);
                 }
+                if (isFabricFormatterButton(target)) {
+                    fixFabricFormatterButton(target);
+                }
+                // Check for material inputs when dialogs open
+                if (target.classList.contains('mat-mdc-input-element') || 
+                    target.classList.contains('mat-mdc-chip-input') ||
+                    target.getAttribute('data-unique-id') === 'EmailsListInput') {
+                    (target as HTMLElement).style.setProperty('color', 'rgb(209, 205, 199)', 'important');
+                }
+                // Also check children for material inputs
+                const materialInputs = target.querySelectorAll?.('input.mat-mdc-input-element, input.mat-mdc-chip-input');
+                materialInputs?.forEach((input) => {
+                    (input as HTMLElement).style.setProperty('color', 'rgb(209, 205, 199)', 'important');
+                });
             }
         }
     });
@@ -680,6 +754,35 @@ export function startSlicerFix(): void {
 }
 
 /**
+ * Reset the Fabric Formatter button to its original style
+ */
+function resetFabricFormatterButton(): void {
+    const button = document.getElementById('fabric-formatter-button');
+    if (button) {
+        button.style.removeProperty('color');
+        const spans = button.querySelectorAll('span');
+        spans.forEach((span) => {
+            (span as HTMLElement).style.removeProperty('color');
+        });
+    }
+}
+
+/**
+ * Reset material inputs to their original styles
+ */
+function resetMaterialInputs(): void {
+    const inputs = document.querySelectorAll('input.mat-mdc-input-element, input.mat-mdc-chip-input, input[data-unique-id="EmailsListInput"]');
+    inputs.forEach((input) => {
+        (input as HTMLElement).style.removeProperty('color');
+    });
+    
+    const searchInputs = document.querySelectorAll('input[placeholder*="Search within"], input.search-filter-content');
+    searchInputs.forEach((input) => {
+        (input as HTMLElement).style.removeProperty('background-color');
+    });
+}
+
+/**
  * Stop observing for slicer popup mutations
  */
 export function stopSlicerFix(): void {
@@ -687,4 +790,8 @@ export function stopSlicerFix(): void {
         slicerObserver.disconnect();
         slicerObserver = null;
     }
+    
+    // Reset styles
+    resetFabricFormatterButton();
+    resetMaterialInputs();
 }
